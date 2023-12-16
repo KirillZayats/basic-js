@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('../extensions/index.js');
+const { NotImplementedError } = require("../extensions/index.js");
 
 /**
  * The MAC-48 address is six groups of two hexadecimal digits (0 to 9 or A to F),
@@ -14,10 +14,38 @@ const { NotImplementedError } = require('../extensions/index.js');
  * For 00-1B-63-84-45-E6, the output should be true.
  *
  */
-function isMAC48Address(/* n */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function isMAC48Address(n) {
+  let array = n.split("-");
+  let isStatus;
+  if (array.length > 0) {
+    for (let index = 0; index < array.length; index++) {
+      let partMac = array[index].split("");
+      if (partMac.length === 2) {
+        for (let j = 0; j < partMac.length; j++) {
+          if (
+            (partMac[j].charCodeAt() >= "0".charCodeAt() &&
+              partMac[j].charCodeAt() <= "9".charCodeAt()) ||
+            (partMac[j].charCodeAt() >= "A".charCodeAt() &&
+              partMac[j].charCodeAt() <= "F".charCodeAt())
+          ) {
+            isStatus = true;
+          } else {
+            isStatus = false;
+            j = partMac.length;
+            index = array.length;
+          }
+        }
+      } else {
+        isStatus = false;
+        index = array.length;
+      }
+    }
+  } else {
+    isStatus = false;
+  }
+  return isStatus;
 }
+
 module.exports = {
-  isMAC48Address
+  isMAC48Address,
 };
